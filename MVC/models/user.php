@@ -2,7 +2,29 @@
 
 class User extends Model
 {
-	
+
+	public $data;
+    protected static $instance;
+
+    public static function getInstance() {
+        if ( is_null(self::$instance) ) {
+            self::$instance = new User ();
+        }
+        return self::$instance;
+    }
+
+    private  function __construct() {
+            global $db;
+            $stmt = $db->prepare('
+			    SELECT * FROM `users` WHERE `id` = :id
+		    ');
+            $stmt->execute( array(
+		        'id' => $_SESSION['id']
+			));
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $this->data = $stmt->fetch();
+    }
+
 	public static function logOut(){
 	    unset($_SESSION['id']);
 	}
@@ -56,47 +78,34 @@ class User extends Model
                        $_SESSION['serviceName'] = $table['serviceName'];
    }
 
-   public static function checkLoginData($email, $password){
+    public static function checkLoginData($email, $password){
 	    global $db;
-		$stmt = $db->prepare("SELECT id, md5, salt, firstName, secondName, email FROM users WHERE email = :email LIMIT 1");
-        $stmt->execute( array('email' => $email) );
-		if($stmt->rowCount()==1){
-		    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$stmt = $db->prepare('
+			    SELECT `id`, `password`, `email`, `accountType`, `serviceName`, `emailActivated` FROM `users` WHERE `email` = :email
+		    ');
+        $stmt->execute( array(
+		            'email' => $email
+			));
+        if($stmt->rowCount()==1){
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $table=$stmt->fetch();
-            if (md5(md5($password).$table['salt']) == $table['md5']) {
-                $arr = array('error' => 0, 'uid' => $table['id'], 'password' => $table['md5']);
-				$_SESSION['id'] = $table['id'];
-				$_SESSION['firstName'] = $table['firstName'];
-				$_SESSION['secondName'] = $table['secondName'];
-				$_SESSION['email'] = $table['email'];
-				$stmt = $db->prepare("
-					SELECT  `companymembership`.`companyId`, `companymembership`.`position`  ,  `companymembership`.`access` ,  `companies`.`name`,`companies`.`plan`
-            	    FROM  `companymembership` 
-            	    INNER JOIN  `companies` ON  `companymembership`.`companyId` =  `companies`.`id` 
-            	    WHERE  `companymembership`.`userId` = :userId
-					ORDER BY `companymembership`.`access` DESC
-				");
-				$stmt->execute( array('userId' => $table['id']) );
-				$_SESSION['companyMembershipCount'] = $stmt->rowCount();
-				if($stmt->rowCount() > 0){
-				    $stmt->setFetchMode(PDO::FETCH_ASSOC);
-				    $table=$stmt->fetch();
-				    $_SESSION['companyId'] = $table['companyId'];
-					$_SESSION['access'] = $table['access'];
-					$_SESSION['name'] = $table['name'];
-					$_SESSION['maxAccess'] = $table['access'];
-					$_SESSION['position'] = $table['position'];
-					$_SESSION['plan'] = $table['plan'];
-				} else {
-				    $_SESSION['access'] = 0;
-				}
-            } else {
+            if($table['password'] == md5($password)){
+                if($table['emailActivated']==1){
+                    $arr = array('error' => 0, 'uid' => $table['id'], 'password' => $table['password']);
+                     $_SESSION['id'] = $table['id'];
+                     $_SESSION['email'] = $table['email'];
+                      $_SESSION['accountType'] = $table['accountType'];
+                       $_SESSION['serviceName'] = $table['serviceName'];
+                }else{
+                    $arr = array('error' => 3, 'uid' => 0, 'password' => 0);
+                }
+            }else {
                 $arr = array('error' => 2, 'uid' => 0, 'password' => 0);
             }
-        }else{
+        } else {
             $arr = array('error' => 1, 'uid' => 0, 'password' => 0);
         }
-		return $arr;
+        return $arr;
 	}
 
 }
