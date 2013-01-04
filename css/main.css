@@ -1,0 +1,56 @@
+.header {
+  margin: 20px 0 40px;
+}
+.header .logo-panel {
+  height: 32px;
+  line-height: 32px;
+  margin-bottom: 32px;
+}
+.header .logo-panel a,
+.header .logo-panel a:hover {
+  height: 32px;
+  line-height: 32px;
+  text-decoration: none;
+  display: inline-block;
+}
+.header .logo-panel img {
+  vertical-align: top;
+  margin-right: 8px;
+  max-width: none;
+}
+.header .logo-panel .site-name {
+  font-size: 24px;
+}
+.header .logo-panel .site-description {
+  color: #999999;
+  display: inline-block;
+  margin-top: 4px;
+  position: absolute;
+  height: 44px;
+  line-height: 44px;
+  margin-left: 12px;
+  border-left: 1px solid #999999;
+  padding-left: 25px;
+}
+.head-banner {
+  color: white;
+  min-height: 200px;
+  padding: 0 0 22px 0;
+  background: url(/milk-banner.png) no-repeat #0072c6;
+  background-position: right bottom;
+  margin-bottom: 40px;
+}
+.head-banner .head-banner-content {
+  margin: 0 12px;
+}
+.head-banner .head-banner-content h1 {
+  font-size: 30px;
+}
+.head-banner .head-banner-content .lead a {
+  color: yellow;
+}
+@media (max-width: 768px) {
+  .head-banner {
+    background-image: none;
+  }
+}
