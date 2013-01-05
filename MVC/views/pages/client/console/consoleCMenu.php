@@ -4,7 +4,7 @@
     <ul class="nav nav-pills nav-stacked">
 				<li><a href="/client/console">Аналитика</a></li>
 				<li><a href="/client/out">Вывод средств (1)</a></li>
-				<li><a href="/client/profile">Персональные данные</a></li>
+				<!-- <li><a href="/client/profile">Персональные данные</a></li> -->
 			</ul>
     </div>
     <div class="span6">

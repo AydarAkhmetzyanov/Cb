@@ -3,8 +3,10 @@
 class IndexController extends Controller {
     
 	public function index(){
-	    redirect('client/console/');
+        if(User::getInstance()->data['accountType']=='admin'){
+            redirect('admin');
+        } else {
+            redirect('client/console/');
+        }
 	}
-	
-
 }

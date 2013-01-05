@@ -14,7 +14,7 @@ function onLogIn(data)
     switch(oresult.error)
 {
 case 0:
- window.location="/";
+ window.location="/client/";
   break;
 case 1:
   alert("Email не найден");
