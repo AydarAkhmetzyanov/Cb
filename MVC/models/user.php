@@ -14,15 +14,7 @@ class User extends Model
     }
 
     private  function __construct() {
-            global $db;
-            $stmt = $db->prepare('
-			    SELECT * FROM `users` WHERE `id` = :id
-		    ');
-            $stmt->execute( array(
-		        'id' => $_SESSION['id']
-			));
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $this->data = $stmt->fetch();
+            $this->data = User::getUser($_SESSION['id']);
     }
 
 	public static function logOut(){
@@ -77,6 +69,52 @@ class User extends Model
                       $_SESSION['accountType'] = $table['accountType'];
                        $_SESSION['serviceName'] = $table['serviceName'];
    }
+
+   public static function getUser($id){
+	        global $db;
+            $stmt = $db->prepare('
+			    SELECT * FROM `users` WHERE `id` = :id
+		    ');
+            $stmt->execute( array(
+		        'id' => $id
+			));
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
+	}
+
+   public static function activateIn($id){
+        global $db;
+        $stmt = $db->prepare('
+			    UPDATE `users` SET `inEnabled`=1 WHERE `id` = :id
+		    ');
+        $stmt->execute( array(
+		            'id' => $id
+				    ));
+   }
+
+   public static function activateOut($id){
+        global $db;
+        $stmt = $db->prepare('
+			    UPDATE `users` SET `outEnabled`=1 WHERE `id` = :id
+		    ');
+        $stmt->execute( array(
+		            'id' => $id
+				    ));
+   }
+
+   public static function getNotActivatedINOUT(){
+	    global $db;
+		$stmt = $db->prepare("
+			    SELECT * FROM `users` WHERE `emailActivated`=1 and (`outEnabled`=0 OR `inEnabled`=0)
+		    ");
+        $stmt->execute();
+        if($stmt->rowCount()>0){
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        } else {
+            $stmt=FALSE;
+        }
+        return $stmt;
+	}
 
     public static function checkLoginData($email, $password){
 	    global $db;

@@ -7,4 +7,11 @@ class UsersController extends Controller {
             echo 'works';
         }
 	}
+
+    public function user($id){
+        if((User::isAuth())and(User::getInstance()->data['accountType']=='admin')){
+            echo 'works';
+        }
+	}
+
 }

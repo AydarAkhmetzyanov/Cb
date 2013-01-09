@@ -54,3 +54,6 @@
     background-image: none;
   }
 }
+a {
+    cursor: pointer;
+}

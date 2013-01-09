@@ -30,6 +30,7 @@ function redirect($target){
 function loadController($pathArray, $lastSegments){
 	$realPath=implode(DS, $pathArray);
 	require_once (ROOT . DS . 'MVC' . DS . 'controllers' . DS . strtolower($realPath) . '.php');
+    define('CONTROLLERURLPATH', implode('/', $pathArray));
 	define('CONTROLLER', end($pathArray));
     $controllerClassName = ucwords(CONTROLLER). 'Controller';
     $controllerObject = new $controllerClassName();

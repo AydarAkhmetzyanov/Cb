@@ -13,9 +13,13 @@
          <small>Для активации сервисов вам необходимо отправить нам подписанный скан <a href="">заявки</a> на подключение с указанием вашего email</small>
         </blockquote>
                 <? }
-            } ?>
-
-            <?php if(User::getInstance()->data['outEnabled']==0){ 
+            } else {?>
+        <blockquote class="pull-right">
+         <p>Ваш префикс: 5039 <?=User::getInstance()->data['prefix']?></p>
+         <small>Вам выдан префикс, изменить его можно в <a href="/client/billing/settings">настройка биллинга</a></small>
+        </blockquote>
+            <?php 
+            } if(User::getInstance()->data['outEnabled']==0){ 
                 if(User::getInstance()->data['accountType']=='person'){ ?>
 
                 <? } else { ?>
@@ -26,11 +30,7 @@
                 <? }
             } ?>
         <blockquote class="pull-right">
-         <p><a href="">Добавить короткий номер</a></p>
-         <small>Для получения средств на ваш счет, необходимо привязать короткий номер к вашему аккаунту</small>
-        </blockquote>
-        <blockquote class="pull-right">
-         <p><a href="">Настроить</a></p>
+         <p><a href="/client/billing/settings">Настроить</a></p>
          <small>Для активации смс биллинга вам необходимо настроить обработчик смс сообщений</small>
         </blockquote>
     </div>

@@ -9,7 +9,7 @@
       <?= HTML::includeCSS('milk-responsive.min');?>
       <?= HTML::includeCSS('main');?>
       <?= HTML::includeJS('jquery-1.8.3.min');?>
-      <?= HTML::includeJS("pages/".CONTROLLER);?>
+      <?= HTML::includeJS("pages/".CONTROLLERURLPATH);?>
       <?= HTML::includeJS('main');?>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
