@@ -7,7 +7,7 @@ class Operators extends Model
 	    global $db;
         
 		$stmt = $db->prepare("
-			    SELECT * FROM `operators` WHERE `code`=(SELECT `code` FROM `countries` WHERE `id`=(SELECT `country_id` FROM `numbers` WHERE `number`=:n))
+			    SELECT * FROM `operators` WHERE `code`=(SELECT `code` FROM `countries` WHERE `id`=(SELECT `country_id` FROM `numbers` WHERE `id`=:n))
 		    ");
         $stmt->execute( array(
 		            'n' => $number

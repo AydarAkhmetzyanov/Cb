@@ -15,16 +15,15 @@ function renderNumberTable(data){
 	var appendhtml;
 	$.each(data, function (key, value) {
 	    if (key == 0) {
-	        numberSelected(value.number);
+	        numberSelected(value.id);
 	    }
-	    appendhtml = '<tr onclick="numberSelected(' + value.number + ')" class="numberSelect"><td>' + value.number + '</td><td>~ ' + value.price / 100 + ' руб.</td></tr>';
+	    appendhtml = '<tr onclick="numberSelected(' + value.id + ')" class="numberSelect"><td>' + value.number + '</td><td>~ ' + value.price / 100 + ' руб.</td><td>'+ value.preprefix+ '</td></tr>';
 	    $("#numbersTBody").append(appendhtml);
 	});
 }
 
-function numberSelected(number){
-    $.get("/price/getPrices/" + number, function (data) {
-        $('#numberSpan').html(number);
+function numberSelected(id){
+    $.get("/price/getPrices/" + id, function (data) {
         renderPricesTable(jQuery.parseJSON(data));
     });
 }

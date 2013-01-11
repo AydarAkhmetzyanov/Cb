@@ -16,7 +16,7 @@
             } else {?>
         <blockquote class="pull-right">
          <p>Ваш префикс: 5039 <?=User::getInstance()->data['prefix']?></p>
-         <small>Вам выдан префикс, изменить его можно в <a href="/client/billing/settings">настройка биллинга</a></small>
+         <small>Изменить префикс можно в <a href="/client/billing/settings">настройка биллинга</a></small>
         </blockquote>
             <?php 
             } if(User::getInstance()->data['outEnabled']==0){ 
@@ -29,10 +29,12 @@
         </blockquote>
                 <? }
             } ?>
+        <?php if(User::getInstance()->data['dynamicResponder']==3){ ?>
         <blockquote class="pull-right">
          <p><a href="/client/billing/settings">Настроить</a></p>
          <small>Для активации смс биллинга вам необходимо настроить обработчик смс сообщений</small>
         </blockquote>
+        <?php }?>
     </div>
 	</div>
 </div>

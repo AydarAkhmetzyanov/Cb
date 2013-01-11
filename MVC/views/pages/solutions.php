@@ -36,11 +36,7 @@
 </p>
 <br>
 <h3>Организовать sms оплату можно практически везде, все зависит от Вас и Ваших фантазий!</h3>
-<br>					
-    <div class="cleaner"></div>
+				
   </div>
 </div>
-<br>
-<div class="cleaner"><br><br></div>
-<div class="cleaner"><br><br></div>
 </div>

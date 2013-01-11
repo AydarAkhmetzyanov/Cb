@@ -3,6 +3,7 @@
 <form id="addNumberForm" onsubmit="addNumber();return false;" class="form-inline">
   <input id="addedNumber" name="number" required type="text" class="input-small" placeholder="номер">
   <div class="input-append"><input required name="price" type="text" id="addedPrice" class="input-small" placeholder="средняя цена"><span class="add-on">руб.</span></div>
+    <input name="preprefix" type="text" id="addedPrice" class="input-small" placeholder="predprefix">
     <select name="country" class="span2">
        <?php foreach ($countries as $row) {
      echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
@@ -22,7 +23,7 @@
 						<thead>
 							<tr>
 								<th>Номер</th>
-								<th>Средняя стоимость</th>
+								<th>Средняя стоимость</th><th>Предпрефикс</th>
 								<th>Страна</th>
 								<th>Агрегатор</th>
 							</tr>
@@ -36,6 +37,9 @@
                                  </td>
 								<td>
                                   <div class="input-append"><input required value="<?=$number['price']/100?>" name="price" type="text" class="input-small" placeholder="средняя цена"><span class="add-on">руб.</span></div>
+                                </td>
+                                    <td>
+                                 <input value="<?=$number['preprefix']?>" name="preprefix" type="text" class="input-small" placeholder="preprefix">
                                 </td>
 								<td>
                                 <select name="country" class="span2">

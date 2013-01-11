@@ -28,6 +28,6 @@ function saveNumber(id,element){
 
 function deleteNumber(id){
     var jqxhr = $.get("/admin/prices/ajax_deletenumber/" + id, function (data) {
-        $('#numberRow' + id).remove();
+        $('#numberRow' + id).hide("slow");
     });
 }

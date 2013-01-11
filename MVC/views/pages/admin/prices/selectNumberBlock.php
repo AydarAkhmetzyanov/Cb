@@ -4,10 +4,10 @@
        <?php foreach ($numbers as $number) {
      $realPrice=$number['price']/100;
      echo '<option ';
-     if(@$_POST['number']==$number['number']){
+     if(@$_POST['number']==$number['id']){
 	 echo 'selected';
 	 }
-     echo ' value="'.$number['number'].'">'.$number['country'].' '.$number['number'].' '.$realPrice.'руб.</option>';
+     echo ' value="'.$number['id'].'">'.$number['country'].' '.$number['number'].' '.$realPrice.'руб.</option>';
  }
      ?>
 						</select>
