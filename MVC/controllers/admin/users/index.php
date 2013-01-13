@@ -16,6 +16,7 @@ class IndexController extends Controller {
 
     public function ajax_activatein($id){
         User::activateIn($id);
+
 	}
 
     public function ajax_activateout($id){

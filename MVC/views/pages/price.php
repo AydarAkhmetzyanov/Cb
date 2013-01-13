@@ -19,8 +19,8 @@ padding-left: 10px;
 </style>
 <div class="row contacts">
   <div class="span2"><h3>Start</h3><h4>Стартовый тариф</h4></div>
-  <div class="span3"><h3>Standart</h3><h4><i class="icon-24-Favorite icon-white"></i> +3.5% к Start</h4><h4><i class="icon-24-Paste icon-white"></i> > 50 000 руб. в неделю</h4></div>
-  <div class="span3"><h3>Premium</h3><h4><i class="icon-24-Favorite icon-white"></i> +6% к Start</h4><h4><i class="icon-24-Paste icon-white"></i> > 100 000 руб. в неделю</h4></div>
+  <div class="span3"><h3>Standart</h3><h4><i class="icon-24-Favorite icon-white"></i> +2.5% к Start</h4><h4><i class="icon-24-Paste icon-white"></i> > 50 000 руб. в неделю</h4></div>
+  <div class="span3"><h3>Premium</h3><h4><i class="icon-24-Favorite icon-white"></i> +5% к Start</h4><h4><i class="icon-24-Paste icon-white"></i> > 100 000 руб. в неделю</h4></div>
 </div>
     </div>
 	</div>

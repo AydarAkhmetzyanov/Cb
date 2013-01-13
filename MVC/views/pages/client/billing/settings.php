@@ -1,12 +1,18 @@
 <h1><?=$title?></h1>
+<?php if(User::getInstance()->data['inEnabled']==1){ ?>
 <form method="post" class="form-horizontal">
 						<legend>Ваш префикс</legend>
     <span class="help-block">Префикс это начало смс сообщения отсылаемое абонентом. Он необходим для привязки короткого номера к вашему аккаунту. Он состоит из предпрефикса(для некоторых нероссийских номеров(конкретно в тарифах)), корневого(первый блок символов) и сабпрефикса(на ваш выбор), текст сообщения после префикса не обязателен. Сообщение может иметь вид: "xxxxyyyy", "xxxxyyyyTEXT", "PPPxxxxyyyy" или "PPPxxxxyyyyTEXT".Где PPP-препрефикс, xxxx-корневой префикс, yyyy-ваш личный префикс,TEXT-оставшийся текст сообщения </span>
-			<br>			<div class="control-group">
+			<br>	
+    		<?php if(User::getInstance()->data['realPrefix']!=User::getInstance()->data['prefix']){ ?>
+    <p>Вам так же доступен префикс: 5039<?=User::getInstance()->data['realPrefix']?></p>
+    <?php } ?>
+    <div class="control-group">
 							<label class="control-label">Префикс</label>
 							<div class="controls">
 								<input disabled type="text" class="span1" value="5039">
-                                <input type="text" required maxlength="6" minlength="2" pattern="[0-9A-Za-z]{2,6}" name="prefix" class="span1" value="<?=User::getInstance()->data['prefix']?>" ><?php if(isset($prefixError)) echo '<span class="help-inline">Префикс занят или неверен</span>'?>
+                                <input type="text" required maxlength="7" minlength="3" pattern="[0-9A-Za-z]{3,7}" name="prefix" class="span1" value="<?=User::getInstance()->data['prefix']?>" >
+                             <?php if(isset($prefixError)) echo '<span class="help-inline">Префикс занят или неверен</span>'?>
 							</div>
 						</div>
 						<div class="control-group">
@@ -15,7 +21,7 @@
 							</div>
 						</div>
 					</form>
-
+<?php } ?>
 <form method="post" class="form-horizontal">
 						<legend>Обработчик</legend>
                         <div class="control-group">
@@ -28,26 +34,29 @@
 							<label class="control-label">Тип ответа на смс</label>
 							<div class="controls">
 								<label class="radio">
-                                <input onclick="openStatic();" type="radio" name="dynamicResponder" id="static" value="0">
+                                <input onclick="openStatic();" type="radio" <?php if((User::getInstance()->data['dynamicResponder']==0)or(User::getInstance()->data['dynamicResponder']==3)){ echo 'checked'; }?> name="dynamicResponder" id="dynamicResponderInput" value="0">
                                   Статичный ответ
                                     </label>
                                 <label class="radio">
-                                <input onclick="openDynamic();" type="radio" name="dynamicResponder" id="dynamic" value="1">
+                                <input onclick="openDynamic();" type="radio" <?php if(User::getInstance()->data['dynamicResponder']==1){ echo 'checked'; }?> name="dynamicResponder" id="dynamicResponderInput" value="1">
                                  Динамичный обработчик (при принятии смс, мы отсылаем запрос на ваш обработчик для получения ответного смс)
                                     </label>
 							</div>
 						</div>
+    <div id="dynamicParams" <?php if((User::getInstance()->data['dynamicResponder']==0)or(User::getInstance()->data['dynamicResponder']==3)){ echo 'style="display: none;"'; }?>>
                           <div class="control-group">
 							<label class="control-label">URL обработчика</label>
 							<div class="controls">
-								<input type="url" class="span4" name="dynamicResponderURL" required value="<?=User::getInstance()->data['dynamicResponderURL']?>" placeholder="http://site.ru/script.php">
+								<input type="url" class="span4" name="dynamicResponderURL" value="<?=User::getInstance()->data['dynamicResponderURL']?>" placeholder="http://site.ru/script.php">
 							</div>
+                              
 						</div>
-
+    <a href="/doc/">Документация по работе с обработчиком</a>
+        </div>
 
     <span class="help-block">
     
-<a href="/doc/">Документация по работе с обработчиком</a>
+
 
         
 
@@ -61,25 +70,18 @@
 						</div>
 					</form>
 
-<!--<form class="form-horizontal">
+<form onsubmit="testResponder();return false;" id="testForm" class="form-horizontal">
 <legend>Тест обработчика</legend>
     <div class="control-group">
-							<label class="control-label">Номер отправителя</label>
+							<label class="control-label">Текст 5039<?=User::getInstance()->data['prefix']?></label>
 							<div class="controls">
-								<input type="text" class="span3" required value="79991111111">
+								<input name="text" type="text" class="span4" required value="test">
 							</div>
 						</div>
     <div class="control-group">
-							<label class="control-label">Сервисный номер</label>
 							<div class="controls">
-								<input type="text" class="span4" required value="test">
+								<button type="submit" class="btn">Тест</button>
 							</div>
 						</div>
-    <div class="control-group">
-							<label class="control-label">Текст 5039 <?=User::getInstance()->data['prefix']?></label>
-							<div class="controls">
-								<input type="text" class="span4" required value="test">
-							</div>
-						</div>
-    <p>Result :<span id="testResult">test</span></p>
-</form>-->
+    <p><span id="testResult"></span></p>
+</form>

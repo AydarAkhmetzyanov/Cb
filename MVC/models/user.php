@@ -29,6 +29,21 @@ class User extends Model
 		}
 	}
 	
+
+    public static function changeResponder(){
+        global $db;
+        $stmt = $db->prepare('
+			    UPDATE `users` SET `staticResponse`=:staticResponse,`dynamicResponder`=:dynamicResponder,`dynamicResponderURL`=:dynamicResponderURL  WHERE `id` = :id
+		    ');
+        $stmt->execute( array(
+                    'id' => $_SESSION['id'],
+		            'staticResponse' => $_POST['staticResponse'],
+                    'dynamicResponder' => $_POST['dynamicResponder'],
+                    'dynamicResponderURL' => $_POST['dynamicResponderURL']
+				    ));
+                   
+   }
+
     public static function reg($secret){
         global $db;
         $data = array(
@@ -70,7 +85,23 @@ class User extends Model
                        $_SESSION['serviceName'] = $table['serviceName'];
    }
 
-   public static function getUser($id){
+   public static function getByRealPrefix($rp){
+	        global $db;
+            $stmt = $db->prepare('
+			    SELECT `id`, `email`, `tarif`,`inEnabled`,`dynamicResponder`,`staticResponse`,`dynamicResponderURL`,`isDynamicError` FROM `users` WHERE `realPrefix` = :rp AND `inEnabled`=1
+		    ');
+            $stmt->execute( array(
+		        'rp' => $rp
+			));
+        if($stmt->rowCount()>0){
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
+        } else {
+            return 0;
+        }
+	}
+
+    public static function getUser($id){
 	        global $db;
             $stmt = $db->prepare('
 			    SELECT * FROM `users` WHERE `id` = :id
@@ -81,15 +112,75 @@ class User extends Model
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             return $stmt->fetch();
 	}
+    
+    public static function changePrefix(){
+        global $db;
+        $realPrefix=substr($_POST['prefix'], 0, 3);
+        $stmt = $db->prepare('
+			    SELECT * FROM `users` WHERE `realPrefix` = :prefix
+		    ');
+        $stmt->execute( array(
+		            'prefix' => $realPrefix
+				    ));
+       if($stmt->rowCount()>0){
+           return 0;
+       } else {
+            $stmt = $db->prepare('
+			    update `users` set `prefix` = :prefix,`realPrefix` = :realPrefix
+		    ');
+                $stmt->execute( array(
+		            'prefix' => $_POST['prefix'],
+                    'realPrefix' => $realPrefix
+				    ));
+                    return 1;
+       }
+    }
 
    public static function activateIn($id){
         global $db;
-        $stmt = $db->prepare('
+
+        $stmt = $db->prepare("
+			    SELECT * FROM `users` WHERE `id`=:id
+		    ");
+         $stmt->execute( array(
+		            'id' => $id
+			));
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $table=$stmt->fetch();
+            $prefix=$table['prefix'];
+            $realPrefix=$table['realPrefix'];
+            $umail=$table['email'];
+            if($prefix == NULL){
+                $stmt = $db->prepare('
+			    SELECT MIN(`users`.`realPrefix`)+1 AS `realPrefix` FROM `users` WHERE `users`.`realPrefix`  NOT IN (SELECT T1.`realPrefix` FROM `users` as T1  JOIN `users` as T2  on T1.`realPrefix` + 1 = T2.`realPrefix` )
+		         ');
+         $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $table=$stmt->fetch();
+            $realPrefix=$table['realPrefix'];
+
+                $stmt = $db->prepare('
+			    UPDATE `users` SET `inEnabled`=1,`prefix`=:prefix, `realPrefix` = :realPrefix WHERE `id` = :id
+		        ');
+                $stmt->execute( array(
+		            'id' => $id,
+                    'prefix' => $realPrefix,
+                    'realPrefix' => $realPrefix
+				    ));
+            } else {
+                $stmt = $db->prepare('
 			    UPDATE `users` SET `inEnabled`=1 WHERE `id` = :id
-		    ');
-        $stmt->execute( array(
+		        ');
+                $stmt->execute( array(
 		            'id' => $id
 				    ));
+            }
+
+            Mail::sendInMessage($umail,$realPrefix);
+
+        
+        
+        
    }
 
    public static function activateOut($id){
@@ -100,6 +191,16 @@ class User extends Model
         $stmt->execute( array(
 		            'id' => $id
 				    ));
+                    $stmt = $db->prepare("
+			    SELECT * FROM `users` WHERE `id`=:id
+		    ");
+         $stmt->execute( array(
+		            'id' => $id
+			));
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $table=$stmt->fetch();
+            $umail=$table['email'];
+                    Mail::sendOutMessage($umail);
    }
 
    public static function getNotActivatedINOUT(){
@@ -147,3 +248,5 @@ class User extends Model
 	}
 
 }
+
+?>

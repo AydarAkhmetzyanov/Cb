@@ -22,12 +22,12 @@ class RegController extends Controller {
 		  renderView('header', $data);
           renderView('guestMenu', $data);
           echo '<div class="container">';
-	  	  print_r($_POST);
+	  	  //print_r($_POST);
           $secret=Passwords::generateString(16);
           User::reg($secret);
           $activateLink='http://flybill.ru/reg/complete/'.$secret.'/'.$_POST['email'];
           Mail::sendEmailValidation($_POST['email'],$activateLink);
-          echo "<h1>На вашу почту отправлено письмо подтверждения регистрции, пройдите по ссылке в письме для завершения. $activateLink</h1>";
+          echo "<h1>На вашу почту отправлено письмо подтверждения регистрции, пройдите по ссылке в письме для завершения.</h1>";
           echo '</div>';
 		  renderView('footer', $data);
         } else {
