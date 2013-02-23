@@ -26,7 +26,7 @@
 		<li>Большие отчисления при больших доходах</li>
 		</ul>
 		<p></p>
-		<a href="/tariffs" class="btn btn-medium btn-primary">Подробнее&nbsp;<i class="icon-16-Navigation-Right icon-white"></i></a>
+		<a href="/price" class="btn btn-medium btn-primary">Подробнее&nbsp;<i class="icon-16-Navigation-Right icon-white"></i></a>
 		</div>
 		<div class="span4"><h2>Аналитика и статистика</h2><p>
 		Наш сервис предоставляет не только минимальный набор услуг биллинга. Индивидуальная работа с клиентами, техническая поддержка, онлайн аналитика и статистика являются одними из дополнительных услуг. 
@@ -34,7 +34,7 @@
 		<p>
 		Онлайн аналитика и статистика позволяют строить графики и анализировать доходность Ваших проектов. 
 		</p>
-		<a href="/register" class="btn btn-medium btn-primary">Попробовать&nbsp;<i class="icon-16-Navigation-Right icon-white"></i></a>
+		<a href="/reg" class="btn btn-medium btn-primary">Попробовать&nbsp;<i class="icon-16-Navigation-Right icon-white"></i></a>
 		</div>
 		<div class="span4"><h2>Области использования</h2><p>
 		</p><ul>
@@ -46,6 +46,6 @@
 		<li>Файлообменники и торрент трекеры</li>
 		</ul>
 		<p></p>
-		<a href="/solution" class="btn btn-medium btn-primary">Подробнее&nbsp;<i class="icon-16-Navigation-Right icon-white"></i></a>
+		<a href="/solutions" class="btn btn-medium btn-primary">Подробнее&nbsp;<i class="icon-16-Navigation-Right icon-white"></i></a>
 		</div>
 	</div></div>

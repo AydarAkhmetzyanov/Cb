@@ -25,19 +25,23 @@ require_once (ROOT . DS . 'core' . DS . 'model.class.php');
 spl_autoload_register(array('Autoloader', 'loadLibrary'));
 spl_autoload_register(array('Autoloader', 'loadModel'));
 
-$cprefix='769';
+$cprefix='68902';
 
-$data['keyword'] = $_GET['keyword'];
+$data = array();
+$data['keyword'] = substr(str_replace(' ','',$_GET['msg']), 0, strlen($cprefix));
 
-$data['service-number']= $_GET['service-number'];
-$data['operator-id']= $_GET['operator-id'];
+$data['service-number']= $_GET['num'];
+$data['operator-id']= $_GET['operator_id'];
 $data['operator']= $_GET['operator'];
-$data['phone-number']= $_GET['msisdn'];
-$data['text']= $_GET['text'];
+$data['phone-number']= $_GET['user_id'];
+$data['text']= $_GET['msg'];
 $data['date']= $_GET['date'];
-$data['share']= $_GET['share'];
+$data['share']= $_GET['cost_rur'];
 
 
-
-header('Content-type: text/html; charset=utf-8');
+$smsid = $_GET['smsid'];
+echo "smsid:$smsid\n";	
+echo "status:reply\n";
+echo "\n";
 echo Smsapi::initsmsjoin($data);
+echo "\n";

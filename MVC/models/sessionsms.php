@@ -1,9 +1,26 @@
 <?php
 
-class Sms extends Model
+class Sessionsms extends Model
 {
 
-    public static function insertData($data){
+    public static function createSession($userData,$data,$outsmstext){
+	        global $db;
+        
+
+        $stmt = $db->prepare('
+                INSERT INTO `session_sms`( `service-number`, `stext`, `client_Id`, `date` ,`phone-number`) 
+                VALUES (?,?,?,NOW(),?);
+		    ');
+            $args=array(
+                    $data['service-number'],
+                    $outsmstext,
+                    $userData['id'],
+                    $data['phone-number']
+        );  
+        $stmt->execute($args);
+	}
+
+    public static function closeSession($data){
 	        global $db;
         $stmt = $db->prepare('
 			    UPDATE `users` SET `balance`=`balance`+ :shareClient ,`isDynamicError`= :isDynamicError WHERE `id` = :client_Id;
@@ -33,29 +50,6 @@ class Sms extends Model
                     $data['shareClient']*100,
                     $data['phone-number']
         );  
-        $stmt->execute($args);
-
-	}
-
-    public static function insertDataLost($data){
-	        global $db;
-        $stmt = $db->prepare('
-                INSERT INTO `sms`( `service-number`, `operator-id`, `operator`, `text`, `keyword`, `keywordClient`, `client_Id`, `date`, `share`, `shareClient`,`phone-number`) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?);
-		    ');
-            $args=array(
-                    $data['service-number'],
-                    $data['operator-id'],
-                    $data['operator'],
-                    $data['text'],
-                    $data['keyword'],
-                    0,
-                    0,
-                    $data['date'],
-                    $data['share']*100,
-                    0,
-                    $data['phone-number']
-        );
         $stmt->execute($args);
 
 	}

@@ -23,45 +23,47 @@ class Smsapi
     public static function initsmsjoin($data) {
          self::validateData($data);            //TODO
          $data['keywordClient']=substr(str_replace(' ','',$data['text']), 0, 3+strlen($data['keyword']));
-         $userData=User::getByRealPrefix(substr(str_replace(' ','',$data['text']), strlen($data['keyword']), 3));
+         $realPrefix=(substr(str_replace(' ','',$data['text']), strlen($data['keyword']), 3));
+         $userData=User::getByRealPrefix($realPrefix);
          if(is_array($userData)){
              $data['client_Id']=$userData['id'];
              $data['shareClient']=floor(($data['share']*($userData['tarif']/100))*100)/100;
              if($userData['dynamicResponder']=='1'){
-                 $url = $userData['dynamicResponderURL']."?msisdn=".urlencode($data['msisdn']).
-                 "&service-number=".$data['service-number']."&operator-id=".
+                 $url = $userData['dynamicResponderURL']."?service-number=".$data['service-number']."&operator-id=".
                  urlencode($data['operator-id'])."&operator=".urlencode($data['operator']).
                  "&text=".urlencode($data['text'])."&keyword=$data[keywordClient]&date=".urlencode($data['date']).
-                 "&md5key=$data[md5key]&smsid=$data[smsid]&smscost=$data[smscost]&share=".$data['shareClient'];
-                 
-                 //todo md5 calcultacte and check
+                 "&share=".$data['shareClient'];
                  $response = Smsapi::getResponse($url);
                  if($response==FALSE){
-                     header('Content-type: text/html; charset=utf-8');  
-                     echo $userData['staticResponse'];
-                     if($userData['isDynamicError']==0){
+				     if($userData['isDynamicError']==0){
                          Mail::dynamicError($userData['email']);
                          $data['isDynamicError']=1;
                      }
+                     $resultResponse=substr($userData['staticResponse'], 0, 69);
+                     SMS::insertData($data);
+					 return $resultResponse;
                  } else {
                      $data['isDynamicError']=0;
-                     header('Content-type: text/html; charset=utf-8');  
-                     echo $response;
+                     $resultResponse=substr($response, 0, 69);
+                     SMS::insertData($data);
+					 return $resultResponse;
                  }
              } else {
-                 header('Content-type: text/html; charset=utf-8');  
-                 echo $userData['staticResponse'];
+                 $resultResponse=substr($userData['staticResponse'], 0, 69);
                  $data['isDynamicError']=0;
+                 SMS::insertData($data);
+				 return $resultResponse;
              }
-             SMS::insertData($data);
          } else {
              $data['client_Id']=0;
              $data['shareClient']=0;
-              header('Content-type: text/html; charset=utf-8');  
-                 echo "false";
+                 $resultResponse="false";
                  Sms::insertDataLost($data);
+				 $resultResponse='error';
+				 return $resultResponse;
          }
 	}
+    
 	
 
 }

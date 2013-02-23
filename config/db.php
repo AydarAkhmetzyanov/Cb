@@ -1,7 +1,7 @@
 <?php
 
 try {
-//$creatives_siteDB = new PDO("mysql:host=localhost;dbname=creative2_panga", 'creative2_panga', 'pangapsw', 
+//$creatives_siteDB = new PDO("mysql:host=localhost;dbname=flybill", 'root', 'usbw', 
 $db = new PDO("mysql:host=92.53.122.16;dbname=creatives_fly", 'creatives_fly', 'flypsw',
   array(
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

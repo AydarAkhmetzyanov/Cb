@@ -24,6 +24,18 @@ class PricesController extends Controller {
 		renderView('footer', $data);
 	}
 
+    public function csv(){
+	    $data['sms'] = Sms::get();
+        if($data['sms']!=false){
+            $data['sms'] = $data['sms']->fetchAll();
+            $csv = new Csv();
+            $csv->setHeading('id', 'service-number', 'phone-number', 'operator-id', 'operator', 'text', 'keyword', 'date', 'smscost', 'shareClient', 'share');
+            $csv->addData($data['sms']);
+            $csv->output('D');
+            $csv->clear();
+        }
+	}
+
     public function ajax_addprice(){
         Prices::addPrice();
     }

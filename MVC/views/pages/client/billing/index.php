@@ -3,14 +3,14 @@
     
     <?php
         $per=User::getInstance()->data['tarif'];
-if($per==88){ 
+if($per==90){ 
     echo 'Start 100'; 
-} elseif($per==90){
-     echo 'Standart 102.5'; 
 } elseif($per==92){
+     echo 'Standart 102.5'; 
+} elseif($per==94){
      echo 'Premium 105'; 
 } else {
-     echo $per*1.1; 
+     echo $per*1.11; 
 }
 ?>
 %
@@ -27,7 +27,6 @@ if($per==88){
 								<th>Дата и время</th>
 								<th>Номер телефона</th>
 								<th>Короткий номер</th>
-                                <th>Стоимость смс</th>
                                 <th>Отчисление</th>
 							</tr>
 						</thead>
@@ -35,7 +34,7 @@ if($per==88){
 								<?php foreach ($sms as $row) {
      $smsprice=$row['smscost']/100;
      $realShare=$row['shareClient']/100;
-     echo '<tr><td>'.$row['date'].'</td><td>'.$row['msisdn'].'</td><td>'.$row['service-number'].'</td><td>'.$smsprice.'</td><td>'.$realShare.'</td></tr>';
+     echo '<tr><td>'.$row['date'].'</td><td>'.$row['phone-number'].'</td><td>'.$row['service-number'].'</td><td>'.$realShare.'</td></tr>';
  }
      ?>
 						</tbody>

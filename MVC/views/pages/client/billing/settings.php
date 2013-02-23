@@ -5,12 +5,12 @@
     <span class="help-block">Префикс это начало смс сообщения отсылаемое абонентом. Он необходим для привязки короткого номера к вашему аккаунту. Он состоит из предпрефикса(для некоторых нероссийских номеров(конкретно в тарифах)), корневого(первый блок символов) и сабпрефикса(на ваш выбор), текст сообщения после префикса не обязателен. Сообщение может иметь вид: "xxxxyyyy", "xxxxyyyyTEXT", "PPPxxxxyyyy" или "PPPxxxxyyyyTEXT".Где PPP-препрефикс, xxxx-корневой префикс, yyyy-ваш личный префикс,TEXT-оставшийся текст сообщения </span>
 			<br>	
     		<?php if(User::getInstance()->data['realPrefix']!=User::getInstance()->data['prefix']){ ?>
-    <p>Вам так же доступен префикс: 5039<?=User::getInstance()->data['realPrefix']?></p>
+    <p>Вам так же доступен префикс: 37056<?=User::getInstance()->data['realPrefix']?></p>
     <?php } ?>
     <div class="control-group">
 							<label class="control-label">Префикс</label>
 							<div class="controls">
-								<input disabled type="text" class="span1" value="5039">
+								<input disabled type="text" class="span1" value="37056">
                                 <input type="text" required maxlength="7" minlength="3" pattern="[0-9A-Za-z]{3,7}" name="prefix" class="span1" value="<?=User::getInstance()->data['prefix']?>" >
                              <?php if(isset($prefixError)) echo '<span class="help-inline">Префикс занят или неверен</span>'?>
 							</div>
@@ -73,7 +73,7 @@
 <form onsubmit="testResponder();return false;" id="testForm" class="form-horizontal">
 <legend>Тест обработчика</legend>
     <div class="control-group">
-							<label class="control-label">Текст 5039<?=User::getInstance()->data['prefix']?></label>
+							<label class="control-label">Текст 37056<?=User::getInstance()->data['prefix']?></label>
 							<div class="controls">
 								<input name="text" type="text" class="span4" required value="test">
 							</div>

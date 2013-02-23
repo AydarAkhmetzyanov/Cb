@@ -232,7 +232,7 @@
 						<div id="regFinish" class="control-group" >
 							<div class="controls">
                                 <label class="checkbox">
-        <input onclick="$('#completeReg').show();" type="checkbox">Я согласен/согласна с <a href="">условиями использования</a>
+        <input onclick="$('#completeReg').show();" type="checkbox">Я согласен/согласна на обработку и хранение персональных данных для подключения услуг.</a>
       </label>
 								<button type="submit" id="completeReg" style="display: none;" class="btn">Завершить регистрацию</button>
 							</div>

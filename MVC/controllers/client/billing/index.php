@@ -22,7 +22,7 @@ class IndexController extends Controller {
         if($data['sms']!=false){
             $data['sms'] = $data['sms']->fetchAll();
             $csv = new Csv();
-            $csv->setHeading('id', 'msisdn', 'service-number', 'operator-id', 'operator', 'text', 'keyword', 'date', 'smsid', 'smscost', 'share');
+            $csv->setHeading('id', 'service-number', 'phone-number', 'operator-id', 'operator', 'text', 'keyword', 'date', 'share');
             $csv->addData($data['sms']);
             $csv->output('D');
             $csv->clear();

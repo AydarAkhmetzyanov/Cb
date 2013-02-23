@@ -1,6 +1,7 @@
 <div class="container">
 <form id="logInForm" onSubmit="return logIn()" class="form-horizontal">
 						<legend><?=$title?></legend>
+    <p><a onclick="demoAccess();">Протестировать сервис</a></p>
 						<div class="control-group">
 							<label class="control-label" for="inputEmail">Email</label>
 							<div class="controls">

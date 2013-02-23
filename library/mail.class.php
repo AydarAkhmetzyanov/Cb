@@ -32,11 +32,11 @@ class Mail
 		return Mail::send($message,$email,$subject);
 	}
 	
-    public static function sendInMessage($email, $prefix) {
+    public static function sendInMessage($email) {
         $subject='FlyBill.ru активация';
         $message = '
     <img src="http://flybill.ru/flybillSmall.png"><br>
-    <h1>FlyBill Теперь вы можете принимать оплату через смс, ваш префикс: '.$prefix.'.</h1>
+    <h1>FlyBill Теперь вы можете принимать оплату через смс.</h1>
         <p><a target="_blank" href="http://flybill.ru/login">Войти в панель управления</a></p> 
     '; 
 		return Mail::send($message,$email,$subject);
@@ -60,6 +60,15 @@ class Mail
         <p><a target="_blank" href="http://flybill.ru/login">Войти в панель управления</a></p> 
     '; 
 		return Mail::send($message,$email,$subject);
+	}
+
+    public static function sendToSupport($email,$phone,$message) {
+        $subject='FlyBill.ru письмо в поддержку';
+        $message = '
+    <h2>'.$email.'</h2><h2>'.$phone.'</h2>
+        <p>'.$message.'</p> 
+    '; 
+		return Mail::send($message,'info@flybill.ru',$subject);
 	}
 
 }

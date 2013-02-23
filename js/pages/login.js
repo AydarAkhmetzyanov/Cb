@@ -29,3 +29,9 @@ default:
   alert("Ошибка, попробуйте позже или обратитесь в техническую поддержку");
 }
 }
+
+function demoAccess() {
+    $('#inputEmail').attr('value','test@flybill.ru');
+    $('#inputPassword').attr('value','test');
+    logIn();
+}

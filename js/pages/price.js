@@ -17,7 +17,7 @@ function renderNumberTable(data){
 	    if (key == 0) {
 	        numberSelected(value.id);
 	    }
-	    appendhtml = '<tr onclick="numberSelected(' + value.id + ')" class="numberSelect"><td>' + value.number + '</td><td>~ ' + value.price / 100 + ' руб.</td><td>'+ value.preprefix+ '</td></tr>';
+	    appendhtml = '<tr onclick="numberSelected(' + value.id + ')" class="numberSelect"><td>' + value.number + '</td><td>~ ' + value.price / 100 + ' р.</td><td>'+ value.preprefix+ '</td></tr>';
 	    $("#numbersTBody").append(appendhtml);
 	});
 }
@@ -32,7 +32,7 @@ function renderPricesTable(data){
     $("#pricesTBody").html('');
 	var appendhtml;
 	$.each(data, function(key, value) {
-	    appendhtml='<tr><td>'+value.operator_short_name+'</td><td>'+value.cost /100+' руб.</td><td>'+((value.share/100)*0.88).toFixed(2)+' руб.</td><td>'+((value.share/100)*0.90).toFixed(2)+' руб.</td><td>'+((value.share/100)*0.92).toFixed(2)+' руб.</td></tr>';
+	    appendhtml='<tr><td>'+value.operator_short_name+'</td><td>'+value.cost /100+' руб.</td><td>'+((value.share/100)*0.95).toFixed(2)+' руб.</td></tr>';
 		$("#pricesTBody").append(appendhtml);
     });
 }

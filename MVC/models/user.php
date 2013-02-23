@@ -101,6 +101,23 @@ class User extends Model
         }
 	}
 
+   public static function getByEmailPassword($email, $password){
+	        global $db;
+            $stmt = $db->prepare('
+			    SELECT * FROM `users` WHERE `email` = :email AND `password`=:password
+		    ');
+            $stmt->execute( array(
+		        'email' => $email,
+                'password' => md5($password)
+			));
+        if($stmt->rowCount()>0){
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
+        } else {
+            return 0;
+        }
+	}
+
     public static function getUser($id){
 	        global $db;
             $stmt = $db->prepare('
@@ -136,6 +153,24 @@ class User extends Model
        }
     }
 
+    public static function findMinPrefix(){
+        global $db;
+        $stmt = $db->prepare('
+			    SELECT `id` FROM `users` WHERE `realPrefix`=:rp
+		         ');
+                 
+        for ($i = 100; $i < 999; $i++) {
+           $stmt->execute( array(
+		            'rp' => $i
+				    ));
+                    if($stmt->rowCount()==0){
+                        $result = $i;
+                        $i=1000;
+                    }
+         }
+         return $result;
+    }
+
    public static function activateIn($id){
         global $db;
 
@@ -151,13 +186,7 @@ class User extends Model
             $realPrefix=$table['realPrefix'];
             $umail=$table['email'];
             if($prefix == NULL){
-                $stmt = $db->prepare('
-			    SELECT MIN(`users`.`realPrefix`)+1 AS `realPrefix` FROM `users` WHERE `users`.`realPrefix`  NOT IN (SELECT T1.`realPrefix` FROM `users` as T1  JOIN `users` as T2  on T1.`realPrefix` + 1 = T2.`realPrefix` )
-		         ');
-         $stmt->execute();
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $table=$stmt->fetch();
-            $realPrefix=$table['realPrefix'];
+                $realPrefix=User::findMinPrefix();
 
                 $stmt = $db->prepare('
 			    UPDATE `users` SET `inEnabled`=1,`prefix`=:prefix, `realPrefix` = :realPrefix WHERE `id` = :id
@@ -176,10 +205,8 @@ class User extends Model
 				    ));
             }
 
-            Mail::sendInMessage($umail,$realPrefix);
+            Mail::sendInMessage($umail);
 
-        
-        
         
    }
 

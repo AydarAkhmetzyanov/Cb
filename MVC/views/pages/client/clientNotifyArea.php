@@ -15,7 +15,7 @@
                 <? }
             } else {?>
         <blockquote class="pull-right">
-         <p>Ваш префикс: 5039<?=User::getInstance()->data['prefix']?></p>
+         <p>Ваш префикс: 37056<?=User::getInstance()->data['prefix']?></p>
          <small>Изменить префикс можно в <a href="/client/billing/settings">настройка биллинга</a></small>
         </blockquote>
             <?php 
