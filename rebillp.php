@@ -47,7 +47,7 @@ $data['share']= $_GET['cost_rur'];
 
 $smsid = $_GET['smsid'];
 echo "content_type:text/plain\n";
-echo "smsid:$sms_id\n";
+echo "smsid:$smsid\n";
 echo "status:reply\n\n";
-echo Smsapi::initsmsjoin($data);
+//echo Smsapi::initsmsjoin($data);
 echo "\n\n";
