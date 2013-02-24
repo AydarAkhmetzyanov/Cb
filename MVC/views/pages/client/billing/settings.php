@@ -69,9 +69,9 @@
 							</div>
 						</div>
 					</form>
-
+ <?php if(User::getInstance()->data['dynamicResponder']==1){ ?>
 <form onsubmit="testResponder();return false;" id="testForm" class="form-horizontal">
-<legend>Тест обработчика</legend>
+<legend>Тест динамического обработчика</legend>
     <div class="control-group">
 							<label class="control-label">Текст 37056<?=User::getInstance()->data['prefix']?></label>
 							<div class="controls">
@@ -85,3 +85,4 @@
 						</div>
     <p><span id="testResult"></span></p>
 </form>
+<?php } ?>

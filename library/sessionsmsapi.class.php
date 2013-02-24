@@ -1,34 +1,25 @@
 <?php
 
-class Smsapi
+class Sessionsmsapi
 {
-    
-    public static function getResponse($url) {
-         $ch = curl_init();
-         curl_setopt($ch, CURLOPT_URL, $url);
-         curl_setopt($ch, CURLOPT_HEADER, 0);
-         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-         curl_setopt($ch, CURLOPT_TIMEOUT, 4);
-         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-         $result = curl_exec($ch);
-         curl_close($ch);
-         return $result;
-	}
 
     private static function validateData($data) {
          
          return true;
 	}
 
-    public static function initsmsjoin($data) {
+    public static function processSMS($data) {
          self::validateData($data);            //TODO
-         $data['keywordClient']=substr(str_replace(' ','',$data['text']), 0, 3+strlen($data['keyword']));
-         $realPrefix=(substr(str_replace(' ','',$data['text']), strlen($data['keyword']), 3));
-         $userData=User::getByRealPrefix($realPrefix);
-         if(is_array($userData)){
+
+         $sessionsms=Sessionsms::getLastByNumber($data['phone-number']);
+         if(is_array($sessionsms)){
+             $userData=User::getById($sessionsms['id']);
              $data['client_Id']=$userData['id'];
              $data['shareClient']=floor(($data['share']*($userData['tarif']/100))*100)/100;
-             if($userData['dynamicResponder']=='1'){
+
+
+             if($userData['session_dynamicResponder']=='1'){
+                 //начать думать отсюда
                  $url = $userData['dynamicResponderURL']."?service-number=".$data['service-number']."&operator-id=".
                  urlencode($data['operator-id'])."&operator=".urlencode($data['operator']).
                  "&text=".urlencode($data['text'])."&keyword=$data[keywordClient]&date=".urlencode($data['date']).
@@ -49,19 +40,21 @@ class Smsapi
 					 return $resultResponse;
                  }
              } else {
+                 //продолжить думать
                  $resultResponse=substr($userData['staticResponse'], 0, 69);
                  $data['isDynamicError']=0;
                  SMS::insertData($data);
 				 return $resultResponse;
              }
+
+
+             //update sms and user
          } else {
-             $data['client_Id']=0;
-             $data['shareClient']=0;
-                 $resultResponse="false";
-                 Sms::insertDataLost($data);
-				 $resultResponse='error';
-				 return $resultResponse;
+             Sessionsms::insertDataLost($data);
+             $resultResponse='session not found';
+			 return $resultResponse;
          }
+
 	}
     
 	

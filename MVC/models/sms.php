@@ -18,7 +18,7 @@ class Sms extends Model
 
         $stmt = $db->prepare('
                 INSERT INTO `sms`( `service-number`, `operator-id`, `operator`, `text`, `keyword`, `keywordClient`, `client_Id`, `date`, `share`, `shareClient`,`phone-number`) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?);
+                VALUES (?,?,?,?,?,?,?,NOW(),?,?,?);
 		    ');
             $args=array(
                     $data['service-number'],
@@ -28,7 +28,6 @@ class Sms extends Model
                     $data['keyword'],
                     $data['keywordClient'],
                     $data['client_Id'],
-                    $data['date'],
                     $data['share']*100,
                     $data['shareClient']*100,
                     $data['phone-number']
@@ -41,7 +40,7 @@ class Sms extends Model
 	        global $db;
         $stmt = $db->prepare('
                 INSERT INTO `sms`( `service-number`, `operator-id`, `operator`, `text`, `keyword`, `keywordClient`, `client_Id`, `date`, `share`, `shareClient`,`phone-number`) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?);
+                VALUES (?,?,?,?,?,?,?,NOW(),?,?,?);
 		    ');
             $args=array(
                     $data['service-number'],
@@ -51,7 +50,6 @@ class Sms extends Model
                     $data['keyword'],
                     0,
                     0,
-                    $data['date'],
                     $data['share']*100,
                     0,
                     $data['phone-number']

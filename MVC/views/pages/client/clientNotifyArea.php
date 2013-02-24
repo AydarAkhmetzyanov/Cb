@@ -29,12 +29,7 @@
         </blockquote>
                 <? }
             } ?>
-        <?php if(User::getInstance()->data['dynamicResponder']==3){ ?>
-        <blockquote class="pull-right">
-         <p><a href="/client/billing/settings">Настроить</a></p>
-         <small>Для активации смс биллинга вам необходимо настроить обработчик смс сообщений</small>
-        </blockquote>
-        <?php }?>
+<!-- тут новости-->
     </div>
 	</div>
 </div>

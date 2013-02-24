@@ -25,23 +25,13 @@ require_once (ROOT . DS . 'core' . DS . 'model.class.php');
 spl_autoload_register(array('Autoloader', 'loadLibrary'));
 spl_autoload_register(array('Autoloader', 'loadModel'));
 
-//цель: обработка смс
-//задачи: 
-//идентификация сессии -
-//определение клиента -
-//закрытие сессии
-//начисление средств
-//определение типа ответа
-//запрос к динамическому обработчику
-//отправка ответа
-
 $cprefix='124542';
 
 $data['service-number']= $_GET['num'];
 $data['operator-id']= $_GET['operator_id'];
 $data['operator']= $_GET['operator'];
 $data['phone-number']= $_GET['user_id'];
-$data['text']= $_GET['msg'];
+$data['text']= substr($_GET['msg'],strlen($cprefix),strlen($_GET['msg'])-strlen($cprefix));
 $data['date']= $_GET['date'];
 $data['share']= $_GET['cost_rur'];
 
@@ -49,5 +39,5 @@ $smsid = $_GET['smsid'];
 echo "content_type:text/plain\n";
 echo "smsid:$smsid\n";
 echo "status:reply\n\n";
-//echo Smsapi::initsmsjoin($data);
+echo Sessionsmsapi::processSMS($data);
 echo "\n\n";

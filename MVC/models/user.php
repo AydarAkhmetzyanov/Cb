@@ -129,6 +129,22 @@ class User extends Model
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             return $stmt->fetch();
 	}
+
+    public static function getById($id){
+	        global $db;
+            $stmt = $db->prepare('
+			    SELECT * FROM `users` WHERE `id` = :id
+		    ');
+            $stmt->execute( array(
+		        'id' => $id
+			));
+        if($stmt->rowCount()>0){
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
+        } else {
+            return 0;
+        }
+	}
     
     public static function changePrefix(){
         global $db;

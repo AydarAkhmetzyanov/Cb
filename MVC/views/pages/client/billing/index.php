@@ -1,20 +1,4 @@
 <h1><?=$title?></h1>
-<h3>Ваш тариф: 
-    
-    <?php
-        $per=User::getInstance()->data['tarif'];
-if($per==90){ 
-    echo 'Start 100'; 
-} elseif($per==92){
-     echo 'Standart 102.5'; 
-} elseif($per==94){
-     echo 'Premium 105'; 
-} else {
-     echo $per*1.11; 
-}
-?>
-%
-</h3>
 
 <?php
     if(is_array($sms)){

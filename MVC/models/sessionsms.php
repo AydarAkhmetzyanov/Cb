@@ -54,6 +54,41 @@ class Sessionsms extends Model
 
 	}
 
+    public static function insertDataLost($data){
+	        global $db;
+        $stmt = $db->prepare('
+                INSERT INTO `session_sms`( `service-number`, `operator-id`, `operator`, `text`, `client_Id`, `date`, `smscost`, `share`, `shareClient`, `phone-number`, `payed`, `stext`) 
+                VALUES (?,?,?,?,0,NOW(),0,?,0,?,1,0);
+		    ');
+            $args=array(
+                    $data['service-number'],
+                    $data['operator-id'],
+                    $data['operator'],
+                    $data['text'],
+                    $data['share'],
+                    $data['phone-number']
+        );
+        $stmt->execute($args);
+	}
+
+    public static function getLastByNumber($phone){
+	    global $db;
+        $stmt = $db->prepare('
+            select * from `session_sms` where `phone-number`=:phone and `payed`=0 order by `id` DESC LIMIT 1
+		');
+        $stmt->execute( array(
+		    'phone' => $phone
+		));
+        if($stmt->rowCount()>0){
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
+        } else {
+            return 0;
+	    }
+    }
+
+
+    //old unactual
     public static function getLastForUser($id){
 	        global $db;
             $stmt = $db->prepare('
