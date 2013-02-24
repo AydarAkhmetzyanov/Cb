@@ -23,32 +23,26 @@ class Sessionsms extends Model
     public static function closeSession($data){
 	        global $db;
         $stmt = $db->prepare('
-			    UPDATE `users` SET `balance`=`balance`+ :shareClient ,`isDynamicError`= :isDynamicError WHERE `id` = :client_Id;
+			    UPDATE `users` SET `balance`=`balance`+ :shareClient ,`session_isDynamicError`= :isDynamicError WHERE `id` = :client_Id;
 		    ');
             
         $stmt->execute( array(
                    
                     'shareClient' => $data['shareClient']*100,
-		            'isDynamicError' => $data['isDynamicError'],
+		            'isDynamicError' => $data['session_isDynamicError'],
                     'client_Id' => $data['client_Id']
 				    ));
-
         $stmt = $db->prepare('
-                INSERT INTO `sms`( `service-number`, `operator-id`, `operator`, `text`, `keyword`, `keywordClient`, `client_Id`, `date`, `share`, `shareClient`,`phone-number`) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?);
+                UPDATE `session_sms` SET `operator-id`=?,`operator`=?,`text`=?,`share`=?,`shareClient`=?,`payed`=1 
+                WHERE `id`=?;
 		    ');
-            $args=array(
-                    $data['service-number'],
+          $args=array(
                     $data['operator-id'],
                     $data['operator'],
                     $data['text'],
-                    $data['keyword'],
-                    $data['keywordClient'],
-                    $data['client_Id'],
-                    $data['date'],
-                    $data['share']*100,
-                    $data['shareClient']*100,
-                    $data['phone-number']
+                    $data['share'],
+                    $data['shareClient'],
+                    $data['sessionsms']['id']
         );  
         $stmt->execute($args);
 
@@ -88,7 +82,7 @@ class Sessionsms extends Model
     }
 
 
-    //old unactual
+    //change to session
     public static function getLastForUser($id){
 	        global $db;
             $stmt = $db->prepare('
