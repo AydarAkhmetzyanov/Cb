@@ -26,6 +26,12 @@
 							</div>
 						</div>
                     <div class="control-group">
+							<label class="control-label">ICQ</label>
+							<div class="controls">
+								<input required name="icq" type="text" placeholder="">
+							</div>
+						</div>
+                    <div class="control-group">
 							<label class="control-label">Название проекта</label>
 							<div class="controls">
 								<input required name="serviceName" type="text" placeholder="Интернет-магазин">

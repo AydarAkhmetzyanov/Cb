@@ -47,17 +47,17 @@ class User extends Model
     public static function reg($secret){
         global $db;
         $data = array(
-        $_POST['email'],md5($_POST['password']),$_POST['accountType'],$_POST['phone'],$_POST['serviceName'],$_POST['serviceURL'],$_POST['firstName'],$_POST['secondName'],$_POST['WMR'],$_POST['PName'],
+        $_POST['email'],md5($_POST['password']),$_POST['accountType'],$_POST['phone'],$_POST['icq'],$_POST['serviceName'],$_POST['serviceURL'],$_POST['firstName'],$_POST['secondName'],$_POST['WMR'],$_POST['PName'],
         $_POST['PFIO'],$_POST['PINN'],$_POST['POGRN'],$_POST['PSGRN'],$_POST['PSGRD'],$_POST['CName'],$_POST['CINN'],$_POST['CKPP'],$_POST['COGRN'],$_POST['CFIO'],
         $_POST['CFIOR'],$_POST['CPPos'],$_POST['CPDoc'],$_POST['UAddr'],$_POST['UPostAddr'],$_POST['accountNDS'],$_POST['bankName'],$_POST['bankBIK'],$_POST['bankKor'],$_POST['bankAcc'],
         $secret
         );  
         $stmt = $db->prepare('
-			    INSERT INTO `users`(`email`, `password`, `accountType`, `phone`, `serviceName`, `serviceURL`, `firstName`, `secondName`,  `WMR`, `PName`, 
+			    INSERT INTO `users`(`email`, `password`, `accountType`, `phone`, `icq`, `serviceName`, `serviceURL`, `firstName`, `secondName`,  `WMR`, `PName`, 
                 `PFIO`, `PINN`, `POGRN`, `PSGRN`, `PSGRD`, `CName`, `CINN`, `CKPP`, `COGRN`, `CFIO`, 
                 `CFIOR`, `CPPos`, `CPDoc`, `UAddr`, `UPostAddr`, `accountNDS`, `bankName`, `bankBIK`, `bankKor`, `bankAcc`,
                 `emailActivationCode`) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 		    ');
             $stmt->execute($data);
     }
