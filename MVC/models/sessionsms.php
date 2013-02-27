@@ -68,7 +68,7 @@ class Sessionsms extends Model
     public static function getLastByNumber($phone){
 	    global $db;
         $stmt = $db->prepare('
-            select * from `session_sms` where `phone-number`=:phone and `payed`=0 order by `id` DESC LIMIT 1
+            select * from `session_sms` where `phone-number`=:phone and `payed`=1 order by `id` DESC LIMIT 1
 		');
         $stmt->execute( array(
 		    'phone' => $phone
@@ -86,7 +86,7 @@ class Sessionsms extends Model
     public static function getLastForUser($id){
 	        global $db;
             $stmt = $db->prepare('
-                select * from `sms` where `client_Id`=:id order by `id` DESC LIMIT 30
+                select * from `session_sms` where `client_Id`=:id order by `id` DESC LIMIT 30
 		    ');
             $stmt->execute( array(
 		            'id' => $id
@@ -102,7 +102,7 @@ class Sessionsms extends Model
     public static function getAllForUser($id){
 	        global $db;
             $stmt = $db->prepare("
-                select `id`, `service-number`, `phone-number`, `operator-id`, `operator`, `text`, `keywordClient` AS `keyword`, DATE(`date`) AS `date`, REPLACE(FORMAT(`shareClient`/100,2),'.',',') AS `share` from `sms` where `client_Id`=:id order by `id` DESC
+                select `id`, `service-number`, `phone-number`, `operator-id`, `operator`, `text`, DATE(`date`) AS `date`, REPLACE(FORMAT(`shareClient`/100,2),'.',',') AS `share` from `session_sms` where `client_Id`=:id order by `id` DESC
 		    ");
             $stmt->execute( array(
 		            'id' => $id
@@ -118,7 +118,7 @@ class Sessionsms extends Model
     public static function get(){
 	        global $db;
             $stmt = $db->prepare("
-                select `id`, `service-number`, `phone-number`, `operator-id`, `operator`, `text`, `keywordClient` AS `keyword`, DATE(`date`) AS `date`, `smscost`, REPLACE(FORMAT(`shareClient`/100,2),'.',',') AS `shareClient`, REPLACE(FORMAT(`share`/100,2),'.',',') AS `share` from `sms` order by `id` DESC
+                select `id`, `service-number`, `phone-number`, `operator-id`, `operator`, `text`, DATE(`date`) AS `date`, `smscost`, REPLACE(FORMAT(`shareClient`/100,2),'.',',') AS `shareClient`, REPLACE(FORMAT(`share`/100,2),'.',',') AS `share` from `session_sms` order by `id` DESC
 		    ");
             $stmt->execute();
        if($stmt->rowCount()>0){

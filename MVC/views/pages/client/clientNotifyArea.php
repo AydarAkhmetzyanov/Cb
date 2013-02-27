@@ -14,10 +14,19 @@
         </blockquote>
                 <? }
             } else {?>
+		<?	if(strpos($_SERVER['REQUEST_URI'], 'pseudo') === false){ ?>
         <blockquote class="pull-right">
          <p>Ваш префикс: 37056<?=User::getInstance()->data['prefix']?></p>
          <small>Изменить префикс можно в <a href="/client/billing/settings">настройка биллинга</a></small>
         </blockquote>
+		
+		<? }else{ ?>
+		 <blockquote class="pull-right">
+         
+         <small><a href="/client/pseudo/settings">настройка биллинга</a></small>
+        </blockquote>
+		
+		<? } ?>
             <?php 
             } if(User::getInstance()->data['outEnabled']==0){ 
                 if(User::getInstance()->data['accountType']=='person'){ ?>

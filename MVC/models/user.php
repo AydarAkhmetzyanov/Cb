@@ -43,6 +43,21 @@ class User extends Model
 				    ));
                    
    }
+   
+   
+    public static function sessionchangeResponder(){
+        global $db;
+        $stmt = $db->prepare('
+			    UPDATE `users` SET `session_staticResponse`=:session_staticResponse,`session_dynamicResponder`=:session_dynamicResponder,`session_dynamicResponderURL`=:session_dynamicResponderURL  WHERE `id` = :id
+		    ');
+        $stmt->execute( array(
+                    'id' => $_SESSION['id'],
+		            'session_staticResponse' => $_POST['staticResponse'],
+                    'session_dynamicResponder' => $_POST['dynamicResponder'],
+                    'session_dynamicResponderURL' => $_POST['dynamicResponderURL']
+				    ));
+                   
+   }
 
     public static function reg($secret){
         global $db;

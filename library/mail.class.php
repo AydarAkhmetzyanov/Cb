@@ -70,5 +70,18 @@ class Mail
     '; 
 		return Mail::send($message,'info@flybill.ru',$subject);
 	}
+	
+	
+	  public static function sendToUserStartNewText($email,$type,$text) {
+        $subject='FlyBill.ru изменения стартового текста';
+		if($type=='y')
+		{
+        $message = '  <img src="http://flybill.ru/flybillSmall.png"><br>
+    Изменения приняты '; 
+		}else{
+		$message = "В изменениях отказано по причине: ".$text; 
+		}
+		return Mail::send($message,'info@flybill.ru',$subject);
+	}
 
 }

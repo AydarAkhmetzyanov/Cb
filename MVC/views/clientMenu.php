@@ -1,5 +1,6 @@
 <ul class="nav nav-pills">
                 <li><a href="/client/billing/">Биллинг</a></li>
+				<li><a href="/client/pseudo/">Премиум СМС</a></li>
 				<li><a target="_blank" href="mailto:info@flybill.ru?subject=question&body=email:<?=$_SESSION['email']?>">Поддержка</a></li>
 				<li><a href="/client/console">Аккаунт <?=User::getInstance()->data['balance']/100?>р.</a></li>
 
