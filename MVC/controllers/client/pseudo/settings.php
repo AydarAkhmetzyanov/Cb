@@ -56,5 +56,26 @@ class SettingsController extends Controller {
                  
                  
 	}
+	
+	
+	
+	 public function cancel_new_text(){
+      
+	  if($_POST['text']=='ok'){
+	  
+	  global $db;
+	  $stmt = $db->prepare("
+			    UPDATE `users` SET `session_start_new_text`='' WHERE id='".User::getInstance()->data['id']."'
+		    ");
+	  $stmt->execute();
+	  
+	  echo "Отменено";
+	  }
+                 
+                 
+	}
+	
+	
+	
 
 }

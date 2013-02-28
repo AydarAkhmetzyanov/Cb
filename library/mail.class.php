@@ -83,5 +83,19 @@ class Mail
 		}
 		return Mail::send($message,'info@flybill.ru',$subject);
 	}
+	
+	
+	
+	 public static function sendToUserOut($email,$type) {
+        $subject='FlyBill.ru запрос на вывод средств';
+		if($type=='y')
+		{
+        $message = '  <img src="http://flybill.ru/flybillSmall.png"><br>
+    Запрос выпполнен '; 
+		}else{
+		$message = "В запросе отказано"; 
+		}
+		return Mail::send($message,'info@flybill.ru',$subject);
+	}
 
 }

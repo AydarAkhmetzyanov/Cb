@@ -33,3 +33,16 @@ function testResponder(){
     "text"
    );
 	}
+	
+	
+	
+		function cancel_new_text(){
+    $.post(
+    "/client/pseudo/settings/cancel_new_text",
+    $("#cancel_new_text").serialize(),
+    function (data) {
+        $('#cancelnewtextResult').html(data);
+    },
+    "text"
+   );
+	}

@@ -21,10 +21,7 @@
         </blockquote>
 		
 		<? }else{ ?>
-		 <blockquote class="pull-right">
-         
-         <small><a href="/client/pseudo/settings">настройка биллинга</a></small>
-        </blockquote>
+	
 		
 		<? } ?>
             <?php 

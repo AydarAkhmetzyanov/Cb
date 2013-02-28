@@ -87,5 +87,13 @@
 								<button type="submit" class="btn">Изменить</button>
 							</div>
 						</div>
-    <p><span id="starttextResult"></span></p>
-</form>
+    <p><span id="starttextResult"></span></p></form>
+	
+	
+	
+	<? if(User::getinstance()->data['session_start_new_text']!=""){ ?>Вы уже делали заявку <form onsubmit="cancel_new_text();return false;" id="cancel_new_text" class="form-horizontal">
+	<div class="controls"><input name="text" type="hidden" required value="ok">
+								<button type="submit" class="btn" >Отменить</button>
+							</div>  </form>
+	<? } ?> <p><span id="cancelnewtextResult"></span></p>
+
