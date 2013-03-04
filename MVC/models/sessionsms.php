@@ -8,8 +8,8 @@ class Sessionsms extends Model
         
 
         $stmt = $db->prepare('
-                INSERT INTO `session_sms`( `service-number`, `stext`, `client_Id`, `date` ,`phone-number`) 
-                VALUES (?,?,?,NOW(),?);
+                INSERT INTO `session_sms`( `service-number`, `stext`, `client_Id`, `date` ,`phone-number`,`share`,`shareClient`) 
+                VALUES (?,?,?,NOW(),?,-10,-10);
 		    ');
             $args=array(
                     $data['service-number'],
@@ -18,6 +18,15 @@ class Sessionsms extends Model
                     $data['phone-number']
         );  
         $stmt->execute($args);
+
+        $stmt = $db->prepare('
+			    UPDATE `users` SET `balance`=`balance`-10 WHERE `id` = :client_Id;
+		    ');
+            
+        $stmt->execute( array(
+                    'client_Id' => $userData['id']
+				    ));
+
 	}
 
     public static function closeSession($data){
@@ -40,8 +49,8 @@ class Sessionsms extends Model
                     $data['operator-id'],
                     $data['operator'],
                     $data['text'],
-                    $data['share'],
-                    $data['shareClient'],
+                    ($data['share']*100)-10,
+                    ($data['shareClient']*100)-10,
                     $data['sessionsms']['id']
         );  
         $stmt->execute($args);
@@ -59,16 +68,16 @@ class Sessionsms extends Model
                     $data['operator-id'],
                     $data['operator'],
                     $data['text'],
-                    $data['share'],
+                    ($data['share']*100)-10,
                     $data['phone-number']
         );
         $stmt->execute($args);
 	}
 
-    public static function getLastByNumber($phone){
+    public static function getLastUnpayedByNumber($phone){
 	    global $db;
         $stmt = $db->prepare('
-            select * from `session_sms` where `phone-number`=:phone and `payed`=1 order by `id` DESC LIMIT 1
+            select * from `session_sms` where `phone-number`=:phone and `payed`=0 order by `id` DESC LIMIT 1
 		');
         $stmt->execute( array(
 		    'phone' => $phone

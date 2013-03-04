@@ -45,4 +45,5 @@ function testResponder(){
     },
     "text"
    );
+	$("#forma").hide();
 	}

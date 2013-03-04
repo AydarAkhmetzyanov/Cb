@@ -3,8 +3,8 @@
 <?php
     if(is_array($sms)){
 ?>
-<br><h5><a target="_blank" href="/client/pseudo/csv">Выгрузить базу всех сообщений в формате csv(excel)</a></h5>
-<h4>Последние 30 сообщений:</h4>
+<br><h5><a target="_blank" href="/client/pseudo/csv">Выгрузить базу сессий в формате csv(excel)</a></h5>
+<h4>Последние 30 сессий:</h4>
 <table class="table table-condensed table-hovered">
 						<thead>
 							<tr>

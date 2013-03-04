@@ -43,12 +43,24 @@ class SettingsController extends Controller {
 	  if($_POST['text']!=''){
 	  
 	  global $db;
+	  
+	  $stmt = $db->prepare("
+			    SELECT `session_start_text` FROM `users` WHERE id='".User::getInstance()->data['id']."'
+		    ");
+	  $stmt->execute();
+	  $stmt->setFetchMode(PDO::FETCH_ASSOC);
+		 $s_s_t=$stmt->fetch();;
+	  
+	  if($s_s_t['session_start_text']==$_POST['text']){
+	   echo "Измените текст";
+	  }else{
 	  $stmt = $db->prepare("
 			    UPDATE `users` SET `session_start_new_text`='".$_POST['text']."' WHERE id='".User::getInstance()->data['id']."'
 		    ");
 	  $stmt->execute();
 	  
 	  echo "Ваша заявка отправлена";
+	  }
 	  }else{
 	  
 	  echo "Заполните поле";

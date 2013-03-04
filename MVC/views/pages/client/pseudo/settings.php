@@ -1,9 +1,39 @@
 <h1><?=$title?></h1>
 
 
-						<legend>Описание</legend>
-    <span class="help-block">тут должен быть какой то текст как я понял и <a href='/doc/pseudo'>ссылка</a></span>
+						<legend>Псевдо СМС</legend>
+    <span class="help-block">Пользователь вводит свой номер на сайте, после чего ему приходит смс с инструкцией и регистрируется сессия через API FlyBill, которая привязывает его телефон к вашему аккаунту. За создание сессии списываться сумма 10 копеек c вашего аккаунта.
+        Любое ответное СМС считается отправленным вам, таким образом префикс не используется в отличии от Premium SMS. Динамический обработчик ответного смс на вашей стороне такой же как у Premium SMS. <a href='/doc/pseudo'>Документация по использованию API</a></span>
 			<br>	
+
+
+
+
+
+<form onsubmit="start_text();return false;" id="start_text" class="form-horizontal">
+<legend>Отправляемый текст</legend>
+    <div class="control-group">
+							<label class="control-label">Стартовый текст </label>
+							<div class="controls">
+								<input name="text" type="text" class="span4" required value="<?=User::getInstance()->data['session_start_text']?>">
+							</div>
+						</div>
+    <div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn">Изменить</button>
+							</div>
+						</div>
+    <p><span id="starttextResult"></span></p></form>
+	
+	
+	
+	<div id="forma"><? if(User::getinstance()->data['session_start_new_text']!=""){ ?>Вы уже делали заявку <form onsubmit="cancel_new_text();return false;" id="cancel_new_text" class="form-horizontal">
+	<div class="controls"><input name="text" type="hidden" required value="ok">
+								<button type="submit" class="btn" >Отменить</button>
+							</div>  </form>
+	<? } ?> </div><p><span id="cancelnewtextResult"></span></p>
+
+
 
 <form method="post" class="form-horizontal">
 						<legend>Обработчик</legend>
@@ -34,7 +64,7 @@
 							</div>
                               
 						</div>
-    <a href="/doc/">Документация по работе с обработчиком</a>
+    <a href="/doc/">Документация по работе с динамическим обработчиком</a>
         </div>
 
     <span class="help-block">
@@ -69,31 +99,4 @@
     <p><span id="testResult"></span></p>
 </form>
 <?php } ?>
-
-
-
-
-
-<form onsubmit="start_text();return false;" id="start_text" class="form-horizontal">
-<legend>Отправляемый текст</legend>
-    <div class="control-group">
-							<label class="control-label">Стартовый текст </label>
-							<div class="controls">
-								<input name="text" type="text" class="span4" required value="<?=User::getInstance()->data['session_start_text']?>">
-							</div>
-						</div>
-    <div class="control-group">
-							<div class="controls">
-								<button type="submit" class="btn">Изменить</button>
-							</div>
-						</div>
-    <p><span id="starttextResult"></span></p></form>
-	
-	
-	
-	<? if(User::getinstance()->data['session_start_new_text']!=""){ ?>Вы уже делали заявку <form onsubmit="cancel_new_text();return false;" id="cancel_new_text" class="form-horizontal">
-	<div class="controls"><input name="text" type="hidden" required value="ok">
-								<button type="submit" class="btn" >Отменить</button>
-							</div>  </form>
-	<? } ?> <p><span id="cancelnewtextResult"></span></p>
 

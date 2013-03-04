@@ -29,7 +29,8 @@ class Smsapi
              $data['client_Id']=$userData['id'];
              $data['shareClient']=floor(($data['share']*($userData['tarif']/100))*100)/100;
              if($userData['dynamicResponder']=='1'){
-                 $url = $userData['dynamicResponderURL']."?service-number=".$data['service-number']."&operator-id=".
+                 $url = $userData['dynamicResponderURL']."?service-number=".$data['service-number']."&phone-number=".
+                 urlencode($data['phone-number'])."&operator-id=".
                  urlencode($data['operator-id'])."&operator=".urlencode($data['operator']).
                  "&text=".urlencode($data['text'])."&keyword=$data[keywordClient]&date=".urlencode($data['date']).
                  "&share=".$data['shareClient'];

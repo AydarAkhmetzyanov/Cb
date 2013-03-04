@@ -1,5 +1,7 @@
 <?php
 
+//session_sms.php?email=test@flybill.ru&password=test&phone-number=79510665133&service-number=1121
+
 function getAppDir(){
 $nurl = $_SERVER['PHP_SELF'];
 $nurl = str_replace('index.php', '', $nurl);

@@ -4,7 +4,7 @@ class IndexController extends Controller {
     
 	public function index(){
 	    $data = array();
-        $data['title'] = 'Доходы';
+        $data['title'] = 'Сессии';
 		renderView('header', $data);
         renderView('clientMenu', $data);
         renderView('pages/client/pseudo/billingCMenu', $data);

@@ -11,14 +11,15 @@ class Sessionsmsapi
     public static function processSMS($data) {
          self::validateData($data);            //TODO
 
-         $data['sessionsms']=Sessionsms::getLastByNumber($data['phone-number']);
+         $data['sessionsms']=Sessionsms::getLastUnpayedByNumber($data['phone-number']);
          if(is_array($data['sessionsms'])){
              $userData=User::getById($data['sessionsms']['client_Id']);
              $data['client_Id']=$userData['id'];
              $data['shareClient']=floor(($data['share']*($userData['tarif']/100))*100)/100;
 
              if($userData['session_dynamicResponder']=='1'){
-                 $url = $userData['session_dynamicResponderURL']."?service-number=".$data['service-number']."&operator-id=".
+                $url = $userData['dynamicResponderURL']."?service-number=".$data['service-number']."&phone-number=".
+                 urlencode($data['phone-number'])."&operator-id=".
                  urlencode($data['operator-id'])."&operator=".urlencode($data['operator']).
                  "&text=".urlencode($data['text'])."&date=".urlencode($data['date']).
                  "&share=".$data['shareClient'];

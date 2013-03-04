@@ -11,5 +11,13 @@ class DocController extends Controller {
 		renderView('footer', $data);
 	}
 	
+    public function pseudo(){
+	    $data = array();
+        $data['title'] = 'Документация по работе с динамичным обработчиком';
+		renderView('header', $data);
+        renderView('guestMenu', $data);
+		renderView('pages/doc/pseudo', $data);
+		renderView('footer', $data);
+	}
 
 }
